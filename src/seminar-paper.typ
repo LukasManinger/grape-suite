@@ -2,6 +2,12 @@
 #import "todo.typ": todo, list-todos, hide-todos
 #import "elements.typ": *
 
+#import "@preview/hydra:0.5.1": hydra
+#import "../../my/constants.typ": *
+#import "../../tuda-typst-templates/templates/tudapub/tudacolors.typ": tuda_colors, tuda_c
+#import "../../tuda-typst-templates/templates/tudapub/common/tudapub_title_page.typ": *
+
+
 #let project(
     title: none,
     subtitle: none,
@@ -52,9 +58,11 @@
 ) = {
     let ifnn-line(e) = if e != none [#e \ ]
 
-    set text(font: "Atkinson Hyperlegible", size: fontsize)
+    set text(font: "Charter", size: fontsize)
     // show math.equation: set text(font: "Fira Math")
     show math.equation: set text(font: "STIX Two Math")
+    show heading: set text(font: "FrontPage Pro")
+    show figure.caption: set text(font: "FrontPage Pro", size: 10pt)  // TODO fontsize?
 
     set par(justify: true)
 
@@ -62,7 +70,10 @@
     set list(indent: 1em)
 
     show link: underline
-    show link: set text(fill: purple)
+    show link: set text(fill: tuda_c.at("0d"))
+
+    show ref: set text(fill: tuda_c.at("0d"))
+    show cite: set text(fill: tuda_c.at("0d"))
 
     show heading: it => context {
         let num-style = it.numbering
@@ -71,57 +82,114 @@
             return it
         }
 
-        let num = text(weight: "thin", numbering(num-style, ..counter(heading).at(here()))+[ \u{200b}])
+        let num = text(weight: "light", numbering(num-style, ..counter(heading).at(here()))+[ \u{200b}])
         let x-offset = -1 * measure(num).width
 
-        pad(left: x-offset, par(hanging-indent: -1 * x-offset, text(fill: purple.lighten(25%), num) + [] + text(fill: purple, it.body)))
+        pad(left: x-offset, par(hanging-indent: -1 * x-offset, text(fill: tuda_c.at("0c"), num) + [] + text(fill: tuda_c.at("0d"), it.body)))
     }
 
+    show figure.caption: it => block(width: 100%)[#it]
+
+    set footnote.entry(
+        separator: context{
+            set align(center)
+            line(length: width_narrow, stroke: 0.5pt)
+        },
+        indent: 0em
+    )
+
+    // TODO currently kills linking in the PDF
+    // See https://forum.typst.app/t/how-can-i-customize-footnote-entry-without-losing-link-functionality/595
+    // show footnote.entry: it =>  context {
+    //     let num = it.note + [ #sym.zws]
+    //     let x-offset = -1 * measure(num).width
+
+    //     pad(left: x-offset, par(hanging-indent: -1 * x-offset, num + it.note.body))
+    // }
+
     // title page
-    [
-        #set text(size: 1.25em, hyphenate: false)
-        #set par(justify: false)
+    // [
+    //     #set text(size: 1.25em, hyphenate: false)
+    //     #set par(justify: false)
 
-        #v(0.9fr)
-        #text(size: 2.5em, fill: purple, strong(title)) \
-        #if subtitle != none {
-            v(0em)
-            text(size: 1.5em, fill: purple.lighten(25%), subtitle)
-        }
+    //     #v(0.9fr)
+    //     #text(size: 2.5em, fill: purple, strong(title)) \
+    //     #if subtitle != none {
+    //         v(0em)
+    //         text(size: 1.5em, fill: purple.lighten(25%), subtitle)
+    //     }
 
-        #if title-page-part == none [
-            #if title-page-part-submit-date == none {
-                ifnn-line(semester)
-                ifnn-line(date-format(date))
-            } else {
-                title-page-part-submit-date
-            }
+    //     #if title-page-part == none [
+    //         #if title-page-part-submit-date == none {
+    //             ifnn-line(semester)
+    //             ifnn-line(date-format(date))
+    //         } else {
+    //             title-page-part-submit-date
+    //         }
 
-            #if title-page-part-submit-to == none {
-                ifnn-line(text(size: 0.6em, upper(strong(submit-to))))
-                ifnn-line(university)
-                ifnn-line(faculty)
-                ifnn-line(institute)
-                ifnn-line(seminar)
-                ifnn-line(docent)
-            } else {
-                title-page-part-submit-to
-            }
+    //         #if title-page-part-submit-to == none {
+    //             ifnn-line(text(size: 0.6em, upper(strong(submit-to))))
+    //             ifnn-line(university)
+    //             ifnn-line(faculty)
+    //             ifnn-line(institute)
+    //             ifnn-line(seminar)
+    //             ifnn-line(docent)
+    //         } else {
+    //             title-page-part-submit-to
+    //         }
 
-            #if title-page-part-submit-by == none {
-                ifnn-line(text(size: 0.6em, upper(strong(submit-by))))
-                ifnn-line(author + if student-number != none [ (#student-number)])
-                ifnn-line(email)
-                ifnn-line(address)
-            } else {
-                title-page-part-submit-by
-            }
-         ] else {
-            title-page-part
-        }
+    //         #if title-page-part-submit-by == none {
+    //             ifnn-line(text(size: 0.6em, upper(strong(submit-by))))
+    //             ifnn-line(author + if student-number != none [ (#student-number)])
+    //             ifnn-line(email)
+    //             ifnn-line(address)
+    //         } else {
+    //             title-page-part-submit-by
+    //         }
+    //      ] else {
+    //         title-page-part
+    //     }
 
-        #v(0.1fr)
-    ]
+    //     #v(0.1fr)
+    // ]
+
+    tudpub-make-title-page(
+        title: [Reverse Engineering 42],
+        title_german: [Rückwärtsbauen Zweiundvierzig],
+        // "master" or "bachelor" thesis
+        thesis_type: "master",
+        // the code of the accentcolor.
+        // A list of all available accentcolors is in the list tuda_colors
+        accentcolor: "0d",
+        // language for correct hyphenation
+        language: "eng",
+        // author name as text, e.g "Albert Author"
+        author: "Lukas Maninger",
+        // date of submission as string
+        date_of_submission: datetime(
+            year: 2023,
+            month: 10,
+            day: 4,
+        ),
+        location: "Darmstadt",
+        // array of the names of the reviewers
+        reviewer_names: ("SuperSupervisor 1", "SuperSupervisor 2"),
+        // tuda logo, has to be a svg. E.g. image("PATH/TO/LOGO")
+        logo_tuda: image("../../../res/tuda_logo_RGB.svg"),
+        // optional sub-logo of an institute.
+        // E.g. image("logos/iasLogo.jpeg")
+        logo_institute: image("../../../res/centre.jpg"),
+        // How to set the size of the optional sub-logo.
+        // either "width": use tud_logo_width*(2/3)
+        // or     "height": use tud_logo_height*(2/3)
+        logo_institute_sizeing_type: "width",
+        // Move the optional sub-logo horizontally
+        logo_institute_offset_right: 0mm,
+        // an additional white box with content for e.g. the institute, ... below the tud logo.
+        // E.g. logo_sub_content_text: [ Institute A \ filed of study: \ B]
+        logo_sub_content_text: none, // [Human Sciences Department \ Institute for Psychology \ Psychology of Information Processing],
+        title_height: 3.5em
+    )
 
     // page setup
     let ufi = ()
@@ -133,17 +201,15 @@
         margin: if page-margins != none {page-margins} else {
             (top: 2.5cm, bottom: 2.5cm, right: 4cm)
         },
+        header: context{
+            let c = tuda_c.at("0c")
+            set text(size: 0.75em, fill: c)
+            set align(center)
 
-        header: if header != none {header} else [
-            #set text(size: 0.75em)
-
-            #table(columns: (1fr, auto, 1fr), align: bottom, stroke: none, inset: 0pt, if header-left != none {header-left} else [
-                #title
-            ], align(center, if header-middle != none {header-middle} else []), if header-right != none {header-right} else [
-                #show: align.with(top + right)
-                #author, #date-format(date)
-            ])
-        ] + v(-0.5em) + line(length: 100%, stroke: purple),
+            hydra(1, skip-starting: false, use-last: true, display: (ctx, candidate) => candidate.body)
+            v(-0.5em)
+            line(length: width_wide, stroke: c)
+        }
     )
 
     state("grape-suite-element-sentence-supplement").update(sentence-supplement)
@@ -177,8 +243,11 @@
             }).join[],
 
         footer: if footer != none {footer} else {
-            set text(size: 0.75em)
-            line(length: 100%, stroke: purple)
+            let c = tuda_c.at("0c")
+            set text(size: 0.75em, fill: c)
+            set align(center)
+
+            line(length: width_wide, stroke: c)
             v(-0.5em)
 
             table(columns: (1fr, auto, 1fr),
@@ -201,6 +270,12 @@
 
     set heading(numbering: "1.")
     counter(page).update(1)
+
+    show heading.where(level: 1): it => {
+        pagebreak()
+        it
+    }
+    
     body
 
     // backup page count, because last page should not be counted
