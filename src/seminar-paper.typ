@@ -63,6 +63,7 @@
     show math.equation: set text(font: "STIX Two Math")
     show heading: set text(font: "FrontPage Pro")
     show figure.caption: set text(font: "FrontPage Pro", size: 10pt)  // TODO fontsize?
+    // show smallcaps: set text(font: "FrontPage Pro Caps")
 
     set par(justify: true)
 
@@ -85,10 +86,16 @@
         let num = text(weight: "light", numbering(num-style, ..counter(heading).at(here()))+[ \u{200b}])
         let x-offset = -1 * measure(num).width
 
-        pad(left: x-offset, par(hanging-indent: -1 * x-offset, text(fill: tuda_c.at("0c"), num) + [] + text(fill: tuda_c.at("0d"), it.body)))
+        pad(left: x-offset, par(hanging-indent: -1 * x-offset, text(fill: tuda_c.at("10d"), num) + [] + text(fill: tuda_c.at("10d"), it.body)))
     }
 
     show figure.caption: it => block(width: 100%)[#it]
+    // Adapted from https://github.com/typst/typst/discussions/3871
+    // TODO check if linking still works
+    show figure.caption: c => [
+        *#c.supplement #c.counter.display(c.numbering)#c.separator*#c.body
+        //#text(fill: tuda_c.at("10d"))[#c.supplement #c.counter.display(c.numbering)#c.separator]#c.body
+    ]
 
     set footnote.entry(
         separator: context{
@@ -160,7 +167,7 @@
         thesis_type: "master",
         // the code of the accentcolor.
         // A list of all available accentcolors is in the list tuda_colors
-        accentcolor: "0d",
+        accentcolor: "10d",
         // language for correct hyphenation
         language: "eng",
         // author name as text, e.g "Albert Author"
