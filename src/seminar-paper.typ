@@ -70,7 +70,7 @@
     set enum(indent: 1em)
     set list(indent: 1em)
 
-    show link: underline
+    // show link: underline
     show link: set text(fill: tuda_c.at("0d"))
 
     show ref: set text(fill: tuda_c.at("0d"))
@@ -96,6 +96,11 @@
         *#c.supplement #c.counter.display(c.numbering)#c.separator*#c.body
         //#text(fill: tuda_c.at("10d"))[#c.supplement #c.counter.display(c.numbering)#c.separator]#c.body
     ]
+
+    // See https://github.com/talal/ilm/blob/main/lib.typ
+    // Break large tables across pages.
+    // show figure.where(kind: table): set block(breakable: true)
+    set table(stroke: (0.5pt + tuda_c.at("0c")))
 
     set footnote.entry(
         separator: context{
