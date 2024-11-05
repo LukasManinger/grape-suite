@@ -64,6 +64,7 @@
     show heading: set text(font: "FrontPage Pro")
     show figure.caption: set text(font: "FrontPage Pro", size: 10pt)  // TODO fontsize?
     // show smallcaps: set text(font: "FrontPage Pro Caps")
+    show raw: set text(font: "Fira Code", size: 9pt)  // default 8.8
 
     set par(justify: true)
 
@@ -92,15 +93,29 @@
     show figure.caption: it => block(width: 100%)[#it]
     // Adapted from https://github.com/typst/typst/discussions/3871
     // TODO check if linking still works
-    show figure.caption: c => [
-        *#c.supplement #c.counter.display(c.numbering)#c.separator*#c.body
+    show figure.caption: c => context{
+        [*#c.supplement #c.counter.display()#c.separator*#c.body]
+    }
         //#text(fill: tuda_c.at("10d"))[#c.supplement #c.counter.display(c.numbering)#c.separator]#c.body
-    ]
 
     // See https://github.com/talal/ilm/blob/main/lib.typ
     // Break large tables across pages.
     // show figure.where(kind: table): set block(breakable: true)
-    set table(stroke: (0.5pt + tuda_c.at("0c")))
+    set table(inset: 6pt, stroke: (0.5pt + tuda_c.at("0c")))
+
+    // show raw.where(block: false): box.with(
+    //     fill: tuda_c.at("0a"),
+    //     inset: (x: 3pt, y: 0pt),
+    //     outset: (y: 3pt),
+    //     radius: 2pt,
+    // )
+
+    // Block code
+    show raw.where(block: true): block.with(
+        width: 100%,
+        inset: 6pt,
+        stroke: 0.5pt + tuda_c.at("0c"),
+    )
 
     set footnote.entry(
         separator: context{
