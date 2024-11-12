@@ -200,12 +200,16 @@
         ),
         location: "Darmstadt",
         // array of the names of the reviewers
-        reviewer_names: ("SuperSupervisor 1", "SuperSupervisor 2"),
+        reviewer_names: (
+            "Prof. Thomas S. A. Wallis, Ph.D.",
+            "Lina Eicke-Kanani M.Sc."
+        ),
         // tuda logo, has to be a svg. E.g. image("PATH/TO/LOGO")
         logo_tuda: image("../../../res/tuda_logo_RGB.svg"),
         // optional sub-logo of an institute.
         // E.g. image("logos/iasLogo.jpeg")
         logo_institute: image("../../../res/centre.jpg"),
+        logo_institute_secondary: image("../../../res/lab_logo_pupil_white_background.png"),
         // How to set the size of the optional sub-logo.
         // either "width": use tud_logo_width*(2/3)
         // or     "height": use tud_logo_height*(2/3)
@@ -214,7 +218,8 @@
         logo_institute_offset_right: 0mm,
         // an additional white box with content for e.g. the institute, ... below the tud logo.
         // E.g. logo_sub_content_text: [ Institute A \ filed of study: \ B]
-        logo_sub_content_text: none, // [Human Sciences Department \ Institute for Psychology \ Psychology of Information Processing],
+        // logo_sub_content_text: [Department of Human Sciences \ Institute for Psychology],
+        // logo_sub_content_text: [Human Sciences Department \ Institute for Psychology \ Psychology of Information Processing],
         title_height: 3.5em
     )
 
@@ -246,7 +251,7 @@
     if show-outline or show-todolist {
         pad(x: 2em, {
             if show-outline {
-                outline(indent: true)
+                outline(depth: 5, indent: true)
                 v(1fr)
             }
 
@@ -302,6 +307,9 @@
         pagebreak()
         it
     }
+
+    // Like LaTeX \paragraph
+    show heading.where(level: 6): it => text(fill: tuda_c.at("10d"))[#it.body]
     
     body
 
