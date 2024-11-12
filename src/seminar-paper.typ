@@ -309,7 +309,7 @@
     }
 
     // Like LaTeX \paragraph
-    show heading.where(level: 6): it => text(fill: tuda_c.at("10d"))[#it.body]
+    show heading.where(level: 6): it => text(fill: tuda_c.at("10d"), it.body)
     
     body
 
