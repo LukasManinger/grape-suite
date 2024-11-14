@@ -3,7 +3,7 @@
 #import "elements.typ": *
 
 #import "@preview/hydra:0.5.1": hydra
-#import "../../my/constants.typ": *
+#import "../../../modules/constants.typ": *
 #import "../../tuda-typst-templates/templates/tudapub/tudacolors.typ": tuda_colors, tuda_c
 #import "../../tuda-typst-templates/templates/tudapub/common/tudapub_title_page.typ": *
 
