@@ -3,9 +3,6 @@
 #import "elements.typ": *
 
 #import "@preview/hydra:0.5.1": hydra
-#import "../../../modules/constants.typ": *
-#import "../../tuda-typst-templates/templates/tudapub/tudacolors.typ": tuda_colors, tuda_c
-#import "../../tuda-typst-templates/templates/tudapub/common/tudapub_title_page.typ": *
 
 
 #let project(
@@ -54,6 +51,12 @@
     page-margins: none,
     fontsize: 11pt,
 
+    tuda-c: (:),
+    title-page: none,
+    thesis-statement: none,
+    width-narrow: 3in,
+    width-wide: 7in,
+
     body
 ) = {
     let ifnn-line(e) = if e != none [#e \ ]
@@ -72,10 +75,10 @@
     set list(indent: 1em)
 
     // show link: underline
-    show link: set text(fill: tuda_c.at("0d"))
+    show link: set text(fill: tuda-c.at("0d"))
 
-    show ref: set text(fill: tuda_c.at("0d"))
-    show cite: set text(fill: tuda_c.at("0d"))
+    show ref: set text(fill: tuda-c.at("0d"))
+    show cite: set text(fill: tuda-c.at("0d"))
 
     show heading: it => context {
         let num-style = it.numbering
@@ -87,7 +90,7 @@
         let num = text(weight: "light", numbering(num-style, ..counter(heading).at(here()))+[ \u{200b}])
         let x-offset = -1 * measure(num).width
 
-        pad(left: x-offset, par(hanging-indent: -1 * x-offset, text(fill: tuda_c.at("10d"), num) + [] + text(fill: tuda_c.at("10d"), it.body)))
+        pad(left: x-offset, par(hanging-indent: -1 * x-offset, text(fill: tuda-c.at("10d"), num) + [] + text(fill: tuda-c.at("10d"), it.body)))
     }
 
     show figure.caption: it => block(width: 100%)[#it]
@@ -101,7 +104,7 @@
     // See https://github.com/talal/ilm/blob/main/lib.typ
     // Break large tables across pages.
     // show figure.where(kind: table): set block(breakable: true)
-    set table(inset: 6pt, stroke: (0.5pt + tuda_c.at("0c")))
+    set table(inset: 6pt, stroke: (0.5pt + tuda-c.at("0c")))
 
     // show raw.where(block: false): box.with(
     //     fill: tuda_c.at("0a"),
@@ -114,13 +117,13 @@
     show raw.where(block: true): block.with(
         width: 100%,
         inset: 6pt,
-        stroke: 0.5pt + tuda_c.at("0c"),
+        stroke: 0.5pt + tuda-c.at("0c"),
     )
 
     set footnote.entry(
         separator: context{
             set align(center)
-            line(length: width_narrow, stroke: 0.5pt)
+            line(length: width-narrow, stroke: 0.5pt)
         },
         indent: 0em
     )
@@ -135,93 +138,54 @@
     // }
 
     // title page
-    // [
-    //     #set text(size: 1.25em, hyphenate: false)
-    //     #set par(justify: false)
+    if title-page != none {
+        title-page
+    } else {
+        [
+            #set text(size: 1.25em, hyphenate: false)
+            #set par(justify: false)
 
-    //     #v(0.9fr)
-    //     #text(size: 2.5em, fill: purple, strong(title)) \
-    //     #if subtitle != none {
-    //         v(0em)
-    //         text(size: 1.5em, fill: purple.lighten(25%), subtitle)
-    //     }
+            #v(0.9fr)
+            #text(size: 2.5em, fill: purple, strong(title)) \
+            #if subtitle != none {
+                v(0em)
+                text(size: 1.5em, fill: purple.lighten(25%), subtitle)
+            }
 
-    //     #if title-page-part == none [
-    //         #if title-page-part-submit-date == none {
-    //             ifnn-line(semester)
-    //             ifnn-line(date-format(date))
-    //         } else {
-    //             title-page-part-submit-date
-    //         }
+            #if title-page-part == none [
+                #if title-page-part-submit-date == none {
+                    ifnn-line(semester)
+                    ifnn-line(date-format(date))
+                } else {
+                    title-page-part-submit-date
+                }
 
-    //         #if title-page-part-submit-to == none {
-    //             ifnn-line(text(size: 0.6em, upper(strong(submit-to))))
-    //             ifnn-line(university)
-    //             ifnn-line(faculty)
-    //             ifnn-line(institute)
-    //             ifnn-line(seminar)
-    //             ifnn-line(docent)
-    //         } else {
-    //             title-page-part-submit-to
-    //         }
+                #if title-page-part-submit-to == none {
+                    ifnn-line(text(size: 0.6em, upper(strong(submit-to))))
+                    ifnn-line(university)
+                    ifnn-line(faculty)
+                    ifnn-line(institute)
+                    ifnn-line(seminar)
+                    ifnn-line(docent)
+                } else {
+                    title-page-part-submit-to
+                }
 
-    //         #if title-page-part-submit-by == none {
-    //             ifnn-line(text(size: 0.6em, upper(strong(submit-by))))
-    //             ifnn-line(author + if student-number != none [ (#student-number)])
-    //             ifnn-line(email)
-    //             ifnn-line(address)
-    //         } else {
-    //             title-page-part-submit-by
-    //         }
-    //      ] else {
-    //         title-page-part
-    //     }
+                #if title-page-part-submit-by == none {
+                    ifnn-line(text(size: 0.6em, upper(strong(submit-by))))
+                    ifnn-line(author + if student-number != none [ (#student-number)])
+                    ifnn-line(email)
+                    ifnn-line(address)
+                } else {
+                    title-page-part-submit-by
+                }
+            ] else {
+                title-page-part
+            }
 
-    //     #v(0.1fr)
-    // ]
-
-    tudpub-make-title-page(
-        title: [Reverse Engineering 42],
-        title_german: [Rückwärtsbauen Zweiundvierzig],
-        // "master" or "bachelor" thesis
-        thesis_type: "master",
-        // the code of the accentcolor.
-        // A list of all available accentcolors is in the list tuda_colors
-        accentcolor: "10d",
-        // language for correct hyphenation
-        language: "eng",
-        // author name as text, e.g "Albert Author"
-        author: "Lukas Maninger",
-        // date of submission as string
-        date_of_submission: datetime(
-            year: 2023,
-            month: 10,
-            day: 4,
-        ),
-        location: "Darmstadt",
-        // array of the names of the reviewers
-        reviewer_names: (
-            "Prof. Thomas S. A. Wallis, Ph.D.",
-            "Lina Eicke-Kanani M.Sc."
-        ),
-        // tuda logo, has to be a svg. E.g. image("PATH/TO/LOGO")
-        logo_tuda: image("../../../res/tuda_logo_RGB.svg"),
-        // optional sub-logo of an institute.
-        // E.g. image("logos/iasLogo.jpeg")
-        logo_institute: image("../../../res/centre.jpg"),
-        logo_institute_secondary: image("../../../res/lab_logo_pupil_white_background.png"),
-        // How to set the size of the optional sub-logo.
-        // either "width": use tud_logo_width*(2/3)
-        // or     "height": use tud_logo_height*(2/3)
-        logo_institute_sizeing_type: "width",
-        // Move the optional sub-logo horizontally
-        logo_institute_offset_right: 0mm,
-        // an additional white box with content for e.g. the institute, ... below the tud logo.
-        // E.g. logo_sub_content_text: [ Institute A \ filed of study: \ B]
-        // logo_sub_content_text: [Department of Human Sciences \ Institute for Psychology],
-        // logo_sub_content_text: [Human Sciences Department \ Institute for Psychology \ Psychology of Information Processing],
-        title_height: 3.5em
-    )
+            #v(0.1fr)
+        ]
+    }
 
     // page setup
     let ufi = ()
@@ -234,13 +198,13 @@
             (top: 2.5cm, bottom: 2.5cm, right: 4cm)
         },
         header: context{
-            let c = tuda_c.at("0c")
+            let c = tuda-c.at("0c")
             set text(size: 0.75em, fill: c)
             set align(center)
 
             hydra(1, skip-starting: false, use-last: true, display: (ctx, candidate) => candidate.body)
             v(-0.5em)
-            line(length: width_wide, stroke: c)
+            line(length: width-wide, stroke: c)
         }
     )
 
@@ -275,11 +239,11 @@
             }).join[],
 
         footer: if footer != none {footer} else {
-            let c = tuda_c.at("0c")
+            let c = tuda-c.at("0c")
             set text(size: 0.75em, fill: c)
             set align(center)
 
-            line(length: width_wide, stroke: c)
+            line(length: width-wide, stroke: c)
             v(-0.5em)
 
             table(columns: (1fr, auto, 1fr),
@@ -309,7 +273,7 @@
     }
 
     // Like LaTeX \paragraph
-    show heading.where(level: 6): it => text(fill: tuda_c.at("10d"), it.body)
+    show heading.where(level: 6): it => text(fill: tuda-c.at("10d"), it.body)
     
     body
 
@@ -318,24 +282,32 @@
 
     // declaration of independent work
     if show-declaration-of-independent-work {
-        pagebreak(weak: true)
-        set page(footer: [])
+        if thesis-statement != none {
+            pagebreak(weak: true)
+            set page(footer: [])
+            set heading(outlined: false, numbering: none)
 
-        heading(outlined: false, numbering: none, [Selbstständigkeitserklärung])
-        [Hiermit versichere ich, dass ich die vorliegende schriftliche Hausarbeit (Seminararbeit, Belegarbeit) selbstständig verfasst und keine anderen als die von mir angegebenen Quellen und Hilfsmittel benutzt habe. Die Stellen der Arbeit, die anderen Werken wörtlich oder sinngemäß entnommen sind, wurden in jedem Fall unter Angabe der Quellen (einschließlich des World Wide Web und anderer elektronischer Text- und Datensammlungen) kenntlich gemacht. Dies gilt auch für beigegebene Zeichnungen, bildliche Darstellungen, Skizzen und dergleichen. Ich versichere weiter, dass die Arbeit in gleicher oder ähnlicher Fassung noch nicht Bestandteil einer Prüfungsleistung oder einer schriftlichen Hausarbeit (Seminararbeit, Belegarbeit) war. Mir ist bewusst, dass jedes Zuwiderhandeln als Täuschungsversuch zu gelten hat, aufgrund dessen das Seminar oder die Übung als nicht bestanden bewertet und die Anerkennung der Hausarbeit als Leistungsnachweis/Modulprüfung (Scheinvergabe) ausgeschlossen wird. Ich bin mir weiter darüber im Klaren, dass das zuständige Lehrerprüfungsamt/Studienbüro über den Betrugsversuch informiert werden kann und Plagiate rechtlich als Straftatbestand gewertet werden.]
+            thesis-statement
+        } else {
+            pagebreak(weak: true)
+            set page(footer: [])
 
-        v(1cm)
+            heading(outlined: false, numbering: none, [Selbstständigkeitserklärung])
+            [Hiermit versichere ich, dass ich die vorliegende schriftliche Hausarbeit (Seminararbeit, Belegarbeit) selbstständig verfasst und keine anderen als die von mir angegebenen Quellen und Hilfsmittel benutzt habe. Die Stellen der Arbeit, die anderen Werken wörtlich oder sinngemäß entnommen sind, wurden in jedem Fall unter Angabe der Quellen (einschließlich des World Wide Web und anderer elektronischer Text- und Datensammlungen) kenntlich gemacht. Dies gilt auch für beigegebene Zeichnungen, bildliche Darstellungen, Skizzen und dergleichen. Ich versichere weiter, dass die Arbeit in gleicher oder ähnlicher Fassung noch nicht Bestandteil einer Prüfungsleistung oder einer schriftlichen Hausarbeit (Seminararbeit, Belegarbeit) war. Mir ist bewusst, dass jedes Zuwiderhandeln als Täuschungsversuch zu gelten hat, aufgrund dessen das Seminar oder die Übung als nicht bestanden bewertet und die Anerkennung der Hausarbeit als Leistungsnachweis/Modulprüfung (Scheinvergabe) ausgeschlossen wird. Ich bin mir weiter darüber im Klaren, dass das zuständige Lehrerprüfungsamt/Studienbüro über den Betrugsversuch informiert werden kann und Plagiate rechtlich als Straftatbestand gewertet werden.]
 
-        table(columns: (auto, auto, auto, auto),
-            stroke: white,
-            inset: 0cm,
+            v(1cm)
 
-            strong([Ort:]) + h(0.5cm),
-            repeat("."+hide("'")),
-            h(0.5cm) + strong([Unterschrift:]) + h(0.5cm),
-            repeat("."+hide("'")),
-            v(0.75cm) + strong([Datum:]) + h(0.5cm),
-            v(0.75cm) + repeat("."+hide("'")),)
+            table(columns: (auto, auto, auto, auto),
+                stroke: white,
+                inset: 0cm,
+
+                strong([Ort:]) + h(0.5cm),
+                repeat("."+hide("'")),
+                h(0.5cm) + strong([Unterschrift:]) + h(0.5cm),
+                repeat("."+hide("'")),
+                v(0.75cm) + strong([Datum:]) + h(0.5cm),
+                v(0.75cm) + repeat("."+hide("'")),)
+        }
     }
 }
 
