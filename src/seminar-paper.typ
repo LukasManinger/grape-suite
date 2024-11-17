@@ -87,12 +87,14 @@
             return it
         }
 
-        let num = text(weight: "light", numbering(num-style, ..counter(heading).at(here()))+[ \u{200b}])
+        let num = text(weight: "light", numbering(num-style, ..counter(heading).at(here())) + [ #sym.zws])
         let x-offset = -1 * measure(num).width
 
-        pad(left: x-offset, par(hanging-indent: -1 * x-offset, text(fill: tuda-c.at("10d"), num) + [] + text(fill: tuda-c.at("10d"), it.body)))
+        pad(left: x-offset, par(hanging-indent: -1 * x-offset, [#num#it.body]))
     }
 
+    show bibliography: set heading(numbering: "1.")
+    
     show figure.caption: it => block(width: 100%)[#it]
     // Adapted from https://github.com/typst/typst/discussions/3871
     // TODO check if linking still works
@@ -263,17 +265,18 @@
             )
         }
     )
-
-    set heading(numbering: "1.")
-    counter(page).update(1)
-
+    
+    show heading: set text(fill: tuda-c.at("10d"))
+    // Put chapter on new page
     show heading.where(level: 1): it => {
         pagebreak()
         it
     }
-
     // Like LaTeX \paragraph
-    show heading.where(level: 6): it => text(fill: tuda-c.at("10d"), it.body)
+    show heading.where(level: 6): it => it.body
+    
+    set heading(numbering: "1.")
+    counter(page).update(1)
     
     body
 
