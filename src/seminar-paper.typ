@@ -51,9 +51,11 @@
     page-margins: none,
     fontsize: 11pt,
 
-    tuda-c: (:),
     title-page: none,
+    title-page-page-args: none,
     thesis-statement: none,
+    thesis-statement-page-args: none,
+    tuda-c: (:),
     width-narrow: 3in,
     width-wide: 7in,
 
@@ -141,6 +143,7 @@
 
     // title page
     if title-page != none {
+        set page(..title-page-page-args)
         title-page
     } else {
         [
@@ -287,7 +290,7 @@
     if show-declaration-of-independent-work {
         if thesis-statement != none {
             pagebreak(weak: true)
-            set page(footer: [])
+            set page(..thesis-statement-page-args)
             set heading(outlined: false, numbering: none)
 
             thesis-statement
