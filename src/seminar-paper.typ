@@ -49,6 +49,10 @@
     show-declaration-of-independent-work: true,
 
     page-margins: none,
+
+    text-font: "Atkinson Hyperlegible",
+    math-font: "STIX Two Math",
+
     fontsize: 11pt,
 
     title-page: none,
@@ -63,6 +67,9 @@
 ) = {
     let ifnn-line(e) = if e != none [#e \ ]
 
+    set text(font: text-font, size: fontsize)
+    // show math.equation: set text(font: "Fira Math")
+    show math.equation: set text(font: math-font)
     set text(font: "Charter", size: fontsize)
     // show math.equation: set text(font: "Fira Math")
     show math.equation: set text(font: "STIX Two Math")

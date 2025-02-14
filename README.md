@@ -49,7 +49,7 @@ The grape suite is a suite consisting of following templates:
 | `namefield`                              | optional, content, default: `[Name:]`, content shown iff `show-namefield`                                                                                                                                                                                                                  |
 | `show-timefield`                         | optional, bool, default: `false`, show timefield at the end of right header iff true                                                                                                                                                                                                       |
 | `timefield`                              | optional, function, default: `(time) => [Time: #time min.]`, to generate the content shown as the timefield iff `show-timefield` is true                                                                                                                                                   |
-| `max-time`                               | optional, number, default: `0`, time value used in the `timefield` function generateor                                                                                                                                                                                                     |
+| `max-time`                               | optional, number, default: `0`, time value used in the `timefield` function generator                                                                                                                                                                                                     |
 | `show-lines`                             | optional, bool, default: `false`, draw automatic lines for each task, if `lines` parameter of `task` is set                                                                                                                                                                                |
 | `show-point-distribution-in-tasks`       | optional, bool, default: `false`, show point distribution after tasks iff true                                                                                                                                                                                                             |
 | `show-point-distribution-in-solutions`   | optional, bool, default: `false`, show point distributions after solutions iff true                                                                                                                                                                                                        |
@@ -92,6 +92,8 @@ The grape suite is a suite consisting of following templates:
 | `message`                                | optional, function, default: `(points-sum, extrapoints-sum) => [In sum #points-sum + #extrapoints-sum P. are achievable. You achieved #box(line(stroke: purple, length: 1cm)) out of #points-sum points.]`, used to generate the message part above the point distribution                 |
 | `grade-scale`                            | optional, array, default: `(([excellent], 0.9), ([very good], 0.8), ([good], 0.7), ([pass], 0.6), ([fail], 0.49))`, list of grades and percentage of points to reach that grade                                                                                                            |
 | `page-margins`                           | optional, margins, default: `none`, overwrite page margins                                                                                                                                                                                                                                 |
+| `text-font`                              | optional, content, default: `("Atkinson Hyperlegible","Libertinus Serif")`, overwrite font family for text content                                                                                                                                                                         |
+| `math-font`                              | optional, content, default: `("STIX Two Math", "New Computer Modern Math")`, overwrite font family for math equations                                                                                                                                                                      |
 | `fontsize`                               | optional, size, default: `11pt`, overwrite font size                                                                                                                                                                                                                                       |
 | `show-todolist`                          | optional, bool, default: `true`, show list of usages of the `todo` function after the outline                                                                                                                                                                                              |
 | `body`                                   | content, document content                                                                                                                                                                                                                                                                  |
@@ -116,7 +118,7 @@ The grape suite is a suite consisting of following templates:
 | `tight`       | optional, bool, default: `false`, enum style                                                                                            |
 | `markers`     | optional, array, default: `("1.", "a)")`, numbering format for each level, fallback is `i.`                                             |
 | `show-points` | optional, bool, default: `true`, show points next to subtask's body iff `true`                                                          |
-| `counter`     | optional, counter, default: `none`, change number styled by the numbering format; if `none`, each level has an incrementel auto counter |
+| `counter`     | optional, counter, default: `none`, change number styled by the numbering format; if `none`, each level has an incremental auto counter |
 | `content`     | content, subtask body                                                                                                                   |
 
 ## Seminar paper
@@ -184,6 +186,8 @@ The grape suite is a suite consisting of following templates:
 | `show-outline`                         | optional, bool, default: `true`, show outline                                                 |
 | `show-declaration-of-independent-work` | optional, bool, default: `true`, show German declaration of independent work                  |
 | `page-margins`                         | optional, margins, default: `none`, overwrite page margins                                    |
+| `text-font`                            | optional, content, default: `"Atkinson Hyperlegible"`, overwrite font family for text content |
+| `math-font`                            | optional, content, default: `"STIX Two Math"`, overwrite font family for math equations       |
 | `fontsize`                             | optional, size, default: `11pt`, overwrite fontsize                                           |
 | `show-todolist`                        | optional, bool, default: `true`, show list of usages of the `todo` function after the outline |
 | `body`                                 | content, document content                                                                     |
@@ -240,6 +244,7 @@ The grape suite is a suite consisting of following templates:
 | `show-footer`          | optional, bool, default: `true`, show footer on slides                                                                                            |
 | `show-page-numbers`    | optional, bool, default: `true`, show page numbering                                                                                              |
 | `outline-title-text`   | optional, content, default: `"Outline"`, title for the outline                                                                                    |
+| `text-font`            | optional, content, default: `"Atkinson Hyperlegible"`, font family for text content                                                               |
 | `body`                 | content, document content                                                                                                                         |
 
 | `focus-slide` |                           |
