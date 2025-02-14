@@ -50,7 +50,7 @@
 
     page-margins: none,
 
-    text-font: "Atkinson Hyperlegible",
+    text-font: "Charter",
     math-font: "STIX Two Math",
 
     fontsize: 11pt,
@@ -70,9 +70,6 @@
     set text(font: text-font, size: fontsize)
     // show math.equation: set text(font: "Fira Math")
     show math.equation: set text(font: math-font)
-    set text(font: "Charter", size: fontsize)
-    // show math.equation: set text(font: "Fira Math")
-    show math.equation: set text(font: "STIX Two Math")
     show heading: set text(font: "FrontPage Pro")
     show figure.caption: set text(font: "FrontPage Pro", size: 10pt)  // TODO fontsize?
     // show smallcaps: set text(font: "FrontPage Pro Caps")
