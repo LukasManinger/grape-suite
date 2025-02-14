@@ -2,7 +2,7 @@
 #import "todo.typ": todo, list-todos, hide-todos
 #import "elements.typ": *
 
-#import "@preview/hydra:0.5.1": hydra
+#import "@preview/hydra:0.5.2": hydra
 
 
 #let project(
