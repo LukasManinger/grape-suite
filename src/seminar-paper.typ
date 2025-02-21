@@ -224,7 +224,7 @@
     if show-outline or show-todolist {
         pad(x: 2em, {
             if show-outline {
-                outline(depth: 5, indent: true)
+                outline(depth: 5, indent: auto)
                 v(1fr)
             }
 
