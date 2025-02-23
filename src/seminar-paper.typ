@@ -69,7 +69,7 @@
 
     set text(font: text-font, size: fontsize)
     // show math.equation: set text(font: "Fira Math")
-    show math.equation: set text(font: math-font)
+    show math.equation: set text(font: math-font, size: fontsize)  // TODO fontsize?
     show heading: set text(font: "FrontPage Pro")
     show figure.caption: set text(font: "FrontPage Pro", size: 10pt)  // TODO fontsize?
     // show smallcaps: set text(font: "FrontPage Pro Caps")
