@@ -61,6 +61,7 @@
     thesis-statement-page-args: none,
     tuda-c: (:),
     width-narrow: 3in,
+    width-normal: 5in,
     width-wide: 7in,
 
     body
@@ -131,7 +132,7 @@
     set footnote.entry(
         separator: context{
             set align(center)
-            line(length: width-narrow, stroke: 0.5pt)
+            line(length: width-normal, stroke: 0.5pt)
         },
         indent: 0em
     )
