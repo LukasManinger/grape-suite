@@ -1,4 +1,4 @@
-#import "@preview/polylux:0.3.1"
+#import "@preview/polylux:0.4.0"
 
 #import "german-dates.typ": semester, weekday
 #import "colors.typ": *
@@ -7,14 +7,14 @@
 
 #let uncover = polylux.uncover
 #let only = polylux.uncover
-#let pause = polylux.pause
+#let later = polylux.later
 #let slide(..args) = {
     state("grape-suite-slides", ()).update(k => {
         k.push("normal")
         k
     })
 
-    polylux.polylux-slide(..args)
+    polylux.slide(..args)
 }
 
 #let focus-slide(body) = {
@@ -71,9 +71,13 @@
 
     outline-title-text: "Outline",
 
-    text-font: "Atkinson Hyperlegible",
+    fontsize: 24pt,
+    text-font: ("Atkinson Hyperlegible Next", "Atkinson Hyperlegible", "Libertinus Serif"),
+    math-font: ("STIX Two Math", "New Computer Modern Math"),
 
     date: datetime.today(),
+    date-format: (date) => [#weekday(date.weekday()), #date.display("[day].[month].[year]")],
+
     body
 ) = {
     let left-footer = if footer != none {
@@ -91,7 +95,9 @@
 
     show heading: set text(fill: purple)
 
-    set text(size: 24pt, font: text-font)
+    set text(size: fontsize, font: text-font)
+    show math.equation: set text(font: math-font, size: fontsize)
+
     set page(paper: "presentation-16-9",
         footer: {
             let fs = state("grape-suite-slides", ())
@@ -140,7 +146,7 @@
                 #set text(size: 0.75em)
                 #if show-author [#author #if email != none [--- #email ] \ ]
                 #if show-semester [#semester(date) \ ]
-                #if show-date [#weekday(date.weekday()), #date.display("[day].[month].[year]")]
+                #if show-date { date-format(date) }
             ]
         ]))
     }

@@ -10,10 +10,59 @@ The grape suite is a suite consisting of following templates:
 
 ## Exercises
 
+Usable as an exercise sheet:
+
+<table>
+    <tr>
+        <td>
+            <a href="examples/homework01.typ">
+                <img src="img/homework01-1.png" width="250px">
+            </a>
+        </td>
+        <td>
+            <a href="examples/homework01.typ">
+                <img src="img/homework01-2.png" width="250px">
+            </a>
+        </td>
+        <td>
+            <a href="examples/homework01.typ">
+                <img src="img/homework01-3.png" width="250px">
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>Tasks</td>
+        <td>Hints</td>
+        <td>Solutions</td>
+    </tr>
+</table>
+
+Or for short reports/essays:
+
+<table>
+    <tr>
+        <td>
+            <a href="examples/essay01.typ">
+                <img src="img/essay01-1.png" width="250px">
+            </a>
+        </td>
+        <td>
+            <a href="examples/essay01.typ">
+                <img src="img/essay01-2.png" width="250px">
+            </a>
+        </td>
+        <td>
+            <a href="examples/essay01.typ">
+                <img src="img/essay01-3.png" width="250px">
+            </a>
+        </td>
+    </tr>
+</table>
+
 ### Setup
 
 ```typ
-#import "@preview/grape-suite:1.0.1": exercise
+#import "@preview/grape-suite:2.0.0": exercise
 #import exercise: project, task, subtask
 
 #show: project.with(
@@ -49,7 +98,7 @@ The grape suite is a suite consisting of following templates:
 | `namefield`                              | optional, content, default: `[Name:]`, content shown iff `show-namefield`                                                                                                                                                                                                                  |
 | `show-timefield`                         | optional, bool, default: `false`, show timefield at the end of right header iff true                                                                                                                                                                                                       |
 | `timefield`                              | optional, function, default: `(time) => [Time: #time min.]`, to generate the content shown as the timefield iff `show-timefield` is true                                                                                                                                                   |
-| `max-time`                               | optional, number, default: `0`, time value used in the `timefield` function generator                                                                                                                                                                                                     |
+| `max-time`                               | optional, number, default: `0`, time value used in the `timefield` function generator                                                                                                                                                                                                      |
 | `show-lines`                             | optional, bool, default: `false`, draw automatic lines for each task, if `lines` parameter of `task` is set                                                                                                                                                                                |
 | `show-point-distribution-in-tasks`       | optional, bool, default: `false`, show point distribution after tasks iff true                                                                                                                                                                                                             |
 | `show-point-distribution-in-solutions`   | optional, bool, default: `false`, show point distributions after solutions iff true                                                                                                                                                                                                        |
@@ -123,10 +172,37 @@ The grape suite is a suite consisting of following templates:
 
 ## Seminar paper
 
+<table>
+    <tr>
+        <td>
+            <a href="examples/seminar-paper01.typ">
+                <img src="img/seminar-paper01-1.png" width="250px">
+            </a>
+        </td>
+        <td>
+            <a href="examples/seminar-paper01.typ">
+                <img src="img/seminar-paper01-2.png" width="250px">
+            </a>
+        </td>
+        <td>
+            <a href="examples/seminar-paper01.typ">
+                <img src="img/seminar-paper01-3.png" width="250px">
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>Title page</td>
+        <td>Outline</td>
+        <td>Body</td>
+    </tr>
+</table>
+
+_Note:_ The template generates a German statement of authorship as the last page by default. This behavior can be deactivated by using `show-declaration-of-independent-work`.
+
 ### Setup
 
 ```typ
-#import "@preview/grape-suite:1.0.1": seminar-paper
+#import "@preview/grape-suite:2.0.0": seminar-paper
 
 #show: seminar-paper.project.with(
     title: "Die Intensionalität von dass-Sätzen",
@@ -154,43 +230,43 @@ The grape suite is a suite consisting of following templates:
 
 ### Documentation
 
-| `project`                              |                                                                                               |
-| :------------------------------------- | :-------------------------------------------------------------------------------------------- |
-| `title`                                | optional, content, default: `none`, title used on the title page                              |
-| `subtitle`                             | optional, content, default: `none`, subtitle used on title page                               |
-| `submit-to`                            | optional, content, default: `"Submitted to"`, title for the assignees's section               |
-| `submit-by`                            | optional, content, default: `"Submitted by"`, title for the assigned's section                |
-| `university`                           | optional, content, default: `"UNIVERSITY"`                                                    |
-| `faculty`                              | optional, content, default: `"FACULTY"`                                                       |
-| `institute`                            | optional, content, default: `"INSTITUTE"`                                                     |
-| `seminar`                              | optional, content, default: `"SEMINAR"`                                                       |
-| `semester`                             | optional, content, default: `"SEMESTER"`                                                      |
-| `docent`                               | optional, content, default: `"DOCENT"`                                                        |
-| `author`                               | optional, content, default: `"AUTHOR"`                                                        |
-| `email`                                | optional, content, default: `"EMAIL"`                                                         |
-| `address`                              | optional, content, default: `"ADDRESS"`                                                       |
-| `title-page-part`                      | optional, content, default: `none`, overwrite date, assignee and assigned section             |
-| `title-page-part-submit-date`          | optional, content, default: `none`, overwrite date section                                    |
-| `title-page-part-submit-to`            | optional, content, default: `none`, overwrite assignee section                                |
-| `title-page-part-submit-by`            | optional, content, default: `none`, overwrite assigned section                                |
-| `date`                                 | optional, datetime, default: `datetime.today()`                                               |
-| `date-format`                          | optional, function, default: `(date) => date.display("[day].[month].[year]")`                 |
-| `header`                               | optional, content, default: `none`, overwrite page header                                     |
-| `header-right`                         | optional, content, default: `none`, overwrite right header part                               |
-| `header-middle`                        | optional, content, default: `none`, overwrite middle header part                              |
-| `header-left`                          | optional, content, default: `none`, overwrite left header part                                |
-| `footer`                               | optional, content, default: `none`, overwrite footer part                                     |
-| `footer-right`                         | optional, content, default: `none`, overwrite right footer part                               |
-| `footer-middle`                        | optional, content, default: `none`, overwrite middle footer part                              |
-| `footer-left`                          | optional, content, default: `none`, overwrite left footer part                                |
-| `show-outline`                         | optional, bool, default: `true`, show outline                                                 |
-| `show-declaration-of-independent-work` | optional, bool, default: `true`, show German declaration of independent work                  |
-| `page-margins`                         | optional, margins, default: `none`, overwrite page margins                                    |
-| `text-font`                            | optional, content, default: `"Atkinson Hyperlegible"`, overwrite font family for text content |
-| `math-font`                            | optional, content, default: `"STIX Two Math"`, overwrite font family for math equations       |
-| `fontsize`                             | optional, size, default: `11pt`, overwrite fontsize                                           |
-| `show-todolist`                        | optional, bool, default: `true`, show list of usages of the `todo` function after the outline |
-| `body`                                 | content, document content                                                                     |
+| `project`                              |                                                                                                                       |
+| :------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- |
+| `title`                                | optional, content, default: `none`, title used on the title page                                                      |
+| `subtitle`                             | optional, content, default: `none`, subtitle used on title page                                                       |
+| `submit-to`                            | optional, content, default: `"Submitted to"`, title for the assignees's section                                       |
+| `submit-by`                            | optional, content, default: `"Submitted by"`, title for the assigned's section                                        |
+| `university`                           | optional, content, default: `"UNIVERSITY"`                                                                            |
+| `faculty`                              | optional, content, default: `"FACULTY"`                                                                               |
+| `institute`                            | optional, content, default: `"INSTITUTE"`                                                                             |
+| `seminar`                              | optional, content, default: `"SEMINAR"`                                                                               |
+| `semester`                             | optional, content, default: `"SEMESTER"`                                                                              |
+| `docent`                               | optional, content, default: `"DOCENT"`                                                                                |
+| `author`                               | optional, content, default: `"AUTHOR"`                                                                                |
+| `email`                                | optional, content, default: `"EMAIL"`                                                                                 |
+| `address`                              | optional, content, default: `"ADDRESS"`                                                                               |
+| `title-page-part`                      | optional, content, default: `none`, overwrite date, assignee and assigned section                                     |
+| `title-page-part-submit-date`          | optional, content, default: `none`, overwrite date section                                                            |
+| `title-page-part-submit-to`            | optional, content, default: `none`, overwrite assignee section                                                        |
+| `title-page-part-submit-by`            | optional, content, default: `none`, overwrite assigned section                                                        |
+| `date`                                 | optional, datetime, default: `datetime.today()`                                                                       |
+| `date-format`                          | optional, function, default: `(date) => date.display("[day].[month].[year]")`                                         |
+| `header`                               | optional, content, default: `none`, overwrite page header                                                             |
+| `header-right`                         | optional, content, default: `none`, overwrite right header part                                                       |
+| `header-middle`                        | optional, content, default: `none`, overwrite middle header part                                                      |
+| `header-left`                          | optional, content, default: `none`, overwrite left header part                                                        |
+| `footer`                               | optional, content, default: `none`, overwrite footer part                                                             |
+| `footer-right`                         | optional, content, default: `none`, overwrite right footer part                                                       |
+| `footer-middle`                        | optional, content, default: `none`, overwrite middle footer part                                                      |
+| `footer-left`                          | optional, content, default: `none`, overwrite left footer part                                                        |
+| `show-outline`                         | optional, bool, default: `true`, show outline                                                                         |
+| `show-declaration-of-independent-work` | optional, bool, default: `true`, show German declaration of independent work                                          |
+| `page-margins`                         | optional, margins, default: `none`, overwrite page margins                                                            |
+| `text-font`                            | optional, content, default: `("Atkinson Hyperlegible","Libertinus Serif")`, overwrite font family for text content    |
+| `math-font`                            | optional, content, default: `("STIX Two Math", "New Computer Modern Math")`, overwrite font family for math equations |
+| `fontsize`                             | optional, size, default: `11pt`, overwrite fontsize                                                                   |
+| `show-todolist`                        | optional, bool, default: `true`, show list of usages of the `todo` function after the outline                         |
+| `body`                                 | content, document content                                                                                             |
 
 | `sidenote` |                                                                                                         |
 | :--------- | :------------------------------------------------------------------------------------------------------ |
@@ -198,10 +274,42 @@ The grape suite is a suite consisting of following templates:
 
 ## Slides
 
+<table>
+    <tr>
+        <td>
+            <a href="examples/slides01.typ">
+                <img src="img/slides01-01.png" width="250px">
+            </a>
+        </td>
+        <td>
+            <a href="examples/slides01.typ">
+                <img src="img/slides01-02.png" width="250px">
+            </a>
+        </td>
+        <td>
+            <a href="examples/slides01.typ">
+                <img src="img/slides01-03.png" width="250px">
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="examples/slides01.typ">
+                <img src="img/slides01-04.png" width="250px">
+            </a>
+        </td>
+        <td>
+            <a href="examples/slides01.typ">
+                <img src="img/slides01-12.png" width="250px">
+            </a>
+        </td>
+    </tr>
+</table>
+
 ### Setup
 
 ```typ
-#import "@preview/grape-suite:1.0.1": slides
+#import "@preview/grape-suite:2.0.0": slides
 #import slides: *
 
 #show: slides.with(
@@ -238,20 +346,22 @@ The grape suite is a suite consisting of following templates:
 | `box-notice-title`     | optional, content, default: `[Notice]`, shown as the title of a slide's notice box                                                                |
 | `box-example-title`    | optional, content, default: `[Example]`, shown as the title of a slide's example box                                                              |
 | `date`                 | optional, datetime, default: `datetime.today()`                                                                                                   |
+| `date-format`          | optional, function, default: `(date) => [#weekday(date.weekday()), #date.display("[day].[month].[year]")]`                                        |
 | `show-todolist`        | optional, bool, default: `true`, show list of usages of the `todo` function after the outline                                                     |
 | `show-title-slide`     | optional, bool, default: `true`, show title slide                                                                                                 |
 | `show-author`          | optional, bool, default: `true`, show author name on title slide                                                                                  |
 | `show-footer`          | optional, bool, default: `true`, show footer on slides                                                                                            |
 | `show-page-numbers`    | optional, bool, default: `true`, show page numbering                                                                                              |
 | `outline-title-text`   | optional, content, default: `"Outline"`, title for the outline                                                                                    |
-| `text-font`            | optional, content, default: `"Atkinson Hyperlegible"`, font family for text content                                                               |
+| `text-font`            | optional, content, default: `("Atkinson Hyperlegible","Libertinus Serif")`, overwrite font family for text content                                |
+| `math-font`            | optional, content, default: `("STIX Two Math", "New Computer Modern Math")`, overwrite font family for math equations                             |
 | `body`                 | content, document content                                                                                                                         |
 
 | `focus-slide` |                           |
 | :------------ | :------------------------ |
 | `body`        | content, document content |
 
-- `slide`, `pause`, `only`, `uncover`: imported from polylux
+- `slide`, `later`, `only`, `uncover`: imported from polylux
 
 ### Todos
 
@@ -266,6 +376,21 @@ The following functions can be imported from `slides`, `exercise` and `seminar-p
 The following functions can be imported from `slides`, `exercise` and `seminar-paper`: `definition`
 
 # Changelog
+
+## 2.0.0
+
+Fixes:
+
+- typos in Readme file
+
+New:
+
+- `math-font` and `text-font` options in `slides`, `exercise.project` and `seminar-paper.project`
+- `date-format` in `slides`
+
+**Breaking Changes:**
+
+- updated polylux to 0.4.0: replacing `#pause` in favor of `#show: later`
 
 ## 1.0.1
 
