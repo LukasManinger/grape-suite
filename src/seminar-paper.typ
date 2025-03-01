@@ -73,7 +73,7 @@
     show math.equation: set text(font: math-font, size: fontsize)  // TODO fontsize?
     show heading: set text(font: "FrontPage Pro")
     show figure.caption: set text(font: "FrontPage Pro", size: 10pt)  // TODO fontsize?
-    // show smallcaps: set text(font: "FrontPage Pro Caps")
+    show smallcaps: set text(font: "FrontPage Pro Caps")
     show raw: set text(font: "Fira Code", size: 9pt)  // default 8.8
 
     set par(justify: true)
@@ -102,13 +102,13 @@
 
     show bibliography: set heading(numbering: "1.")
     
-    show figure.caption: it => block(width: 100%)[#it]
     // Adapted from https://github.com/typst/typst/discussions/3871
     // TODO check if linking still works
     show figure.caption: c => context{
         [*#c.supplement #c.counter.display()#c.separator*#c.body]
     }
         //#text(fill: tuda_c.at("10d"))[#c.supplement #c.counter.display(c.numbering)#c.separator]#c.body
+    show figure.caption: it => block(width: 100%)[#it]
 
     // See https://github.com/talal/ilm/blob/main/lib.typ
     // Break large tables across pages.
