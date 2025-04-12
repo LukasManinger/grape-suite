@@ -209,7 +209,7 @@
         },
         header: context{
             let c = tuda-c.at("0c")
-            set text(size: 0.75em, fill: c)
+            set text(size: 8pt, fill: c) // was 0.75em
             set align(center)
 
             hydra(1, skip-starting: false, use-last: true, display: (ctx, candidate) => candidate.body)
@@ -250,7 +250,7 @@
 
         footer: if footer != none {footer} else {
             let c = tuda-c.at("0c")
-            set text(size: 0.75em, fill: c)
+            set text(size: 8pt, fill: c) // was 0.75em
             set align(center)
 
             line(length: width-wide, stroke: c)
