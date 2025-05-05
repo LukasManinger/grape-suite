@@ -26,11 +26,12 @@
         k
     })
 
-    polylux.polylux-slide[
-        #set text(size: 1.5em, weight: "bold")
+    polylux.slide[
         #show: align.with(center + horizon)
-        #v(-0.75em)
-        #body
+        #text(size: 1.5em, weight: "bold")[
+            #v(-0.75em)
+            #body
+        ]
     ]
 }
 
@@ -85,7 +86,7 @@
     } else {
         text(size: 0.5em, (
             if show-semester [#semester(short: true, date)],
-            [#series \##no],
+            [#series] + if no != none [\##no],
             title,
             if show-author { author }).filter(e => e != none).join[ --- ]
         )
