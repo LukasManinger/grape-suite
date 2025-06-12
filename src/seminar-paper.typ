@@ -50,7 +50,7 @@
 
     page-margins: none,
 
-    text-font: "Charter",
+    text-font: "XCharter",
     math-font: "STIX Two Math",
 
     fontsize: 11pt,
@@ -73,7 +73,7 @@
     show math.equation: set text(font: math-font, size: fontsize)  // TODO fontsize?
     show heading: set text(font: "FrontPage Pro")
     show figure.caption: set text(font: "FrontPage Pro", size: 10pt)  // TODO fontsize?
-    show smallcaps: set text(font: "FrontPage Pro Caps")
+    // show smallcaps: set text(font: "FrontPage Pro Caps")
     show raw: set text(font: "Fira Code", size: 9pt)  // default 8.8
 
     set par(justify: true)
