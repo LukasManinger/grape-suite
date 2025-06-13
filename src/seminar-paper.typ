@@ -88,7 +88,7 @@
     show cite: set text(fill: tuda-c.at("0d"))
 
     show: format-heading-numbering
-    show: format-quotes
+    // show: format-quotes // NOTE disabled for now
 
     show bibliography: set heading(numbering: "1.")
     
@@ -280,8 +280,7 @@
     
     set heading(numbering: "1.")
 
-    show heading: set par(leading: 0.65em, justify: false)
-    set par(justify: true, leading: 1em, spacing: 1em, first-line-indent: 1.5em)
+    set par(justify: true)
 
     counter(page).update(1)
     
