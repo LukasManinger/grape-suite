@@ -77,7 +77,7 @@
     math-font: ("STIX Two Math", "New Computer Modern Math"),
 
     date: datetime.today(),
-    date-format: (date) => [#weekday(date.weekday()), #date.display("[day].[month].[year]")],
+    date-format: (date) => if type(date) == type(datetime.today()) [#weekday(date.weekday()), #date.display("[day].[month].[year]")] else { date },
 
     body
 ) = {
@@ -86,7 +86,7 @@
     } else {
         text(size: 0.5em, (
             if show-semester [#semester(short: true, date)],
-            [#series] + if no != none [\##no],
+            [#series] + if no != none [ \##no],
             title,
             if show-author { author }).filter(e => e != none).join[ --- ]
         )

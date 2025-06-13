@@ -4,17 +4,6 @@
 #let nobreak(body) = block(breakable: false, body)
 #let center-block(body) = align(center, block(align(left, body)))
 
-#let big-heading(title) = {
-    set par(justify: false)
-    set text(hyphenate: false)
-
-    pad(bottom: 0.5cm,
-        align(center,
-            text(fill: purple,
-                size: 1.75em,
-                strong(title))))
-}
-
 #let make-element(type, no, title, body) = {
     block(inset: 7pt,
         stroke: (bottom: (paint: purple, dash: "dashed")),
@@ -30,7 +19,7 @@
 #let make-task(no, title, instruction, body, extra, points, lines, extra-task-type, task-type) = {
     make-element(if extra {extra-task-type} else {task-type},
         no,
-        if title != none [ --- #title] + h(1fr) + if points != none and points > 0 { [#points P.] },
+        if title != none [ --- #title] + h(1fr) + points,
 
         block(width: 100%, {
             state("grape-suite-subtask-indent").update((0,))
@@ -41,7 +30,7 @@
 
             state("grape-suite-subtask-indent").update((0,))
 
-            if body != none { block(body) }
+            if body != none and body not in ([], [ ]) { block(body) }
 
             context {
                 if state("grape-suite-show-lines").at(here()) == false {
@@ -65,13 +54,13 @@
         block(width: 100%, {
             state("grape-suite-subtask-indent").update((0,))
 
-            if instruction != none {
+            if instruction != none and instruction not in ([], [ ]) {
                 block(emph(instruction))
             }
 
             state("grape-suite-subtask-indent").update((0,))
 
-            if body != none {
+            if body != none and body not in ([], [ ]) {
                 block(body)
             }
 
@@ -91,13 +80,13 @@
         block(width: 100%, {
             state("grape-suite-subtask-indent").update((0,))
 
-            if instruction != none {
+            if instruction != none and instruction not in ([], [ ]) {
                 block(emph(instruction))
             }
 
             state("grape-suite-subtask-indent").update((0,))
 
-            if body != none {
+            if body != none and body not in ([], [ ]) {
                 block(body)
             }
 
@@ -454,7 +443,18 @@
         instruction,
         t.body,
         t.extra,
-        t.points,
+        context {
+            let points = t.points
+
+            if points == 0 {
+                let s = state("grape-suite-tasks", ())
+                points = s.final().at(s.get().len()-1).points
+            }
+
+            if points != 0 {
+                [#points P.]
+            }
+        },
         lines,
         if type != none {type} else {extra-task-type},
         if type != none {type} else {task-type})
@@ -504,12 +504,23 @@
             markers.at(indent.len() - 2)
         }
 
-        enum(numbering: (_) => numbering(marker, num), tight: tight, if points != none and points > 0 and show-points {
-            place(dx: 100%, [#points P.])
-            block(width: 95%, content)
+        if not tight {
+            v(0.25em)
+        }
+
+        grid(columns: (2em, 1fr), column-gutter: 0.75em, {
+            set align(right)
+            numbering(marker, num)
+        }, if points != none and points > 0 and show-points {
+            metadata((type: "grape-suite-subtask-points", content: block(width: 7%, [#points P.])))
+            content
         } else {
             content
         })
+
+        if not tight {
+            v(0.25em)
+        }
     }
 
     state("grape-suite-subtask-indent", (0,)).update(k => {

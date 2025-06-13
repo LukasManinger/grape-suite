@@ -32,17 +32,19 @@
     sentence-supplement: "Example",
 
     date: datetime.today(),
-    date-format: (date) => date.display("[day].[month].[year]"),
+    date-format: (date) => if type(date) == type(datetime.today()) { date.display("[day].[month].[year]") } else { date },
 
     header: none,
     header-right: none,
     header-middle: none,
     header-left: none,
+    show-header-line: true,
 
     footer: none,
     footer-right: none,
     footer-middle: none,
     footer-left: none,
+    show-footer-line: true,
 
     show-outline: true,
     show-todolist: true,
@@ -76,8 +78,6 @@
     // show smallcaps: set text(font: "FrontPage Pro Caps")
     show raw: set text(font: "Fira Code", size: 9pt)  // default 8.8
 
-    set par(justify: true)
-
     set enum(indent: 1em)
     set list(indent: 1em)
 
@@ -87,18 +87,8 @@
     show ref: set text(fill: tuda-c.at("0d"))
     show cite: set text(fill: tuda-c.at("0d"))
 
-    show heading: it => context {
-        let num-style = it.numbering
-
-        if num-style == none {
-            return it
-        }
-
-        let num = text(weight: "light", numbering(num-style, ..counter(heading).at(here())) + [ #sym.zws])
-        let x-offset = -1 * measure(num).width
-
-        pad(left: x-offset, par(hanging-indent: -1 * x-offset, [#num#it.body]))
-    }
+    show: format-heading-numbering
+    show: format-quotes
 
     show bibliography: set heading(numbering: "1.")
     
@@ -243,7 +233,8 @@
             .final()
             .map(e => context {
                 if here().page() == e.loc.at(0) {
-                    place(top + right, align(left, par(justify: false, text(fill: purple, size: 0.75em, hyphenate: false, pad(x: 0.5cm, block(width: 3cm, strong(e.body)))))), dy: e.loc.at(1).y)
+                    set par(justify: false, leading: 0.65em)
+                    place(top + right, align(left, text(fill: purple, size: 0.75em, hyphenate: false, pad(x: 0.5cm, block(width: 3cm, strong(e.body))))), dy: e.loc.at(1).y)
                 } else {
                 }
             }).join[],
@@ -284,6 +275,10 @@
     show heading.where(level: 6): it => it.body
     
     set heading(numbering: "1.")
+
+    show heading: set par(leading: 0.65em, justify: false)
+    set par(justify: true, leading: 1em, spacing: 1em, first-line-indent: 1.5em)
+
     counter(page).update(1)
     
     body
