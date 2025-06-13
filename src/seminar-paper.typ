@@ -35,14 +35,14 @@
     date-format: (date) => if type(date) == type(datetime.today()) { date.display("[day].[month].[year]") } else { date },
 
     header: none,
-    header-right: none,
-    header-middle: none,
-    header-left: none,
+    // header-right: none,
+    // header-middle: none,
+    // header-left: none,
     show-header-line: true,
 
     footer: none,
     footer-right: none,
-    footer-middle: none,
+    // footer-middle: none,
     footer-left: none,
     show-footer-line: true,
 
@@ -197,15 +197,17 @@
         margin: if page-margins != none {page-margins} else {
             (top: 2.5cm, bottom: 2.5cm, right: 4cm)
         },
-        header: context{
+        header: if header != none {header} else {context{
             let c = tuda-c.at("0c")
             set text(size: 8pt, fill: c) // was 0.75em
             set align(center)
 
             hydra(1, skip-starting: false, use-last: true, display: (ctx, candidate) => candidate.body)
-            v(-0.5em)
-            line(length: width-wide, stroke: c)
-        }
+            if show-header-line {
+                v(-0.5em)
+                line(length: width-wide, stroke: c)
+            }
+        }}
     )
 
     state("grape-suite-element-sentence-supplement").update(sentence-supplement)
@@ -244,8 +246,10 @@
             set text(size: 8pt, fill: c) // was 0.75em
             set align(center)
 
-            line(length: width-wide, stroke: c)
-            v(-0.5em)
+            if show-footer-line {
+                line(length: width-wide, stroke: c)
+                v(-0.5em)
+            }
 
             table(columns: (1fr, auto, 1fr),
                 align: top,

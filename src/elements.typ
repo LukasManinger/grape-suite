@@ -160,10 +160,10 @@
             return it
         }
 
-        let num = text(weight: "thin", numbering(num-style, ..counter(heading).at(here()))+[ \u{200b}])
+        let num = text(weight: "light", numbering(num-style, ..counter(heading).at(here())) + [ #sym.zws])
         let x-offset = -1 * measure(num).width
 
-        pad(left: x-offset, par(hanging-indent: -1 * x-offset, text(fill: purple.lighten(25%), num) + [] + text(fill: purple, it.body)))
+        pad(left: x-offset, par(hanging-indent: -1 * x-offset, [#num#it.body]))
     }
 
     body
