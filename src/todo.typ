@@ -16,7 +16,7 @@
         return
     }
 
-    let label-name = make-todo-label(here())
+    // let label-name = make-todo-label(here())
 
     highlight(fill: magenta.lighten(90%), text(fill: magenta,
         if content.pos().len() > 0 {
@@ -25,12 +25,12 @@
             strong[To do]
         })
     )
-    [#label(label-name)]
+    // [#label(label-name)]
 
-    todo-state.update(t => {
-        t.push((page: counter(page).at(here()).first(), label: label-name, content: content.pos().join[]))
-        t
-    })
+    // todo-state.update(t => {
+    //     t.push((page: counter(page).at(here()).first(), label: label-name, content: content.pos().join[]))
+    //     t
+    // })
 }
 
 #let list-todos() = context {
