@@ -122,7 +122,7 @@
     set footnote.entry(
         separator: context{
             set align(center)
-            line(length: width-normal, stroke: 0.5pt)
+            line(length: width-normal, stroke: 0.5pt + tuda-c.at("0c"))
         },
         indent: 0em
     )
