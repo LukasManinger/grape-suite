@@ -276,9 +276,11 @@
         it
     }
     // Like LaTeX \paragraph
+    // show heading.where(level: 5): it => par(it.body)
     show heading.where(level: 6): it => it.body
     
     set heading(numbering: "1.")
+    show heading.where(level: 5).or(heading.where(level: 6)): set heading(numbering: none)
 
     set par(justify: true)
 
