@@ -217,7 +217,7 @@
     if show-outline or show-todolist {
         pad(x: 2em, {
             if show-outline {
-                outline(depth: 4, indent: auto)
+                outline(title: text(fill: tuda-c.at("10d"), "Content"), depth: 4, indent: auto)
                 v(1fr)
             }
 
